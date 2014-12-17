@@ -42,7 +42,19 @@ For the complete details of the configuration, please see
 - [start-cassandra](https://github.com/m-creations/docker-openwrt-cassandra/blob/master/image/root/start-cassandra)
 - [cassandra-env.sh.in](https://github.com/m-creations/docker-openwrt-cassandra/blob/master/image/root/tmp/cassandra-env.sh.in)
 
-### Multiple Nodes
+## Configuring authentication
+
+To configure Cassandra to use internal authentication
+
+```
+docker run -d --name cass -e AUTHENTICATOR=PasswordAuthenticator -e USERNAME=cassandrauser1 -e PASSWORD=casspasswd -e REPLICA_FACTOR=4 mcreations/openwrt-cassandra
+```
+
+```AUTHENTICATOR``` is the value of authenticator parameter in cassandra.yaml and its default value is AllowAllAuthenticator, but when PasswordAuthenticator is used, ```USERNAME``` and ```PASSWORD``` parameters are mandatory to authenticate a user from a client.
+
+```REPLICA_FACTOR``` is number of replications of the keystores related to security data and its default value is 3.
+
+#### Multiple Nodes
 
 Follow the single node setup to get the first node running and keep
 track of its IP. Run the following to launch the other nodes in the
